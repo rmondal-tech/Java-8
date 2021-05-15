@@ -1,0 +1,116 @@
+//read this-https://howtodoinjava.com/java8/java-8-list-all-files-example/
+
+name1.txt
+C:\temp\filename2.txt
+C:\temp\Employee.java
+To list files in a different directory, we can replace "." with the full path of the directory we desire.
+
+3. Files.newDirectoryStream() – List all files and sub-directories
+Java provides a more flexible way of traversing a directory content using Files.newDirectoryStream().
+
+Please note that if we’re working with a large directory, then using DirectoryStream actually make code faster.
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+ 
+public class IterateDirectoryExample {
+ 
+    public static void main(String[] args) {
+ 
+        String dirLocation = "C:/temp";
+ 
+        try {
+            for (Path path : Files.newDirectoryStream(Paths.get(dirLocation))) {
+ 
+                path = path.normalize();
+                System.out.println(path.getFileName());
+            }
+        } catch (IOException e) {
+            // Error while reading the directory
+        }
+    }
+}
+Program Output:
+
+Console
+C:\temp\filename1.txt
+C:\temp\directory1
+C:\temp\filename2.txt
+C:\temp\Employee.java
+4. Files.newDirectoryStream() – Iterate only files excluding sub-directories
+To loop through only the files and excluding all the sub-directories from the stream, use path filter isFile() as the second argument to the newDirectoryStream() constructor.
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+ 
+public class IterateDirectoryExample {
+ 
+    public static void main(String[] args) {
+ 
+        String dirLocation = "C:/temp";
+ 
+        try {
+            for (Path path : Files.newDirectoryStream(Paths.get(dirLocation), 
+                        path -> path.toFile().isFile())) {
+ 
+                path = path.normalize();
+                System.out.println(path.getFileName());
+            }
+        } catch (IOException e) {
+            // Error while reading the directory
+        }
+    }
+}
+Program Output:
+
+Console
+C:\temp\filename1.txt
+C:\temp\filename2.txt
+C:\temp\Employee.java
+5. List of all files of certain extention only
+To get the list of all files of certain extensions only, use two predicates Files::isRegularFile and path.toString().endsWith(".java") together.
+
+With the above predicate, we are listed all .java files in a folder.
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+ 
+public class IterateDirectoryExample {
+ 
+    public static void main(String[] args) {
+ 
+        String dirLocation = "C:/temp";
+ 
+        try {
+            List<File> files = Files.list(Paths.get(dirLocation))
+                                    .filter(Files::isRegularFile)
+                                    .filter(path -> path.toString().endsWith(".java"))
+                                    .map(Path::toFile)
+                                    .collect(Collectors.toList());
+             
+            files.forEach(System.out::println);
+        } catch (IOException e) {
+            // Error while reading the directory
+        }
+    }
+}
+Program Output:
+
+Console
+C:\temp\Employee.java
+6. Finding all hidden files in a directory
+To find all the hidden files, we can use filter expression file -> file.isHidden() in any of above example.
+
+List<File> files = Files.list(Paths.get(dirLocation))
+            .filter(path -> path.toFile().isHidden())
+            .map(Path::toFile)
+            .collect(Collectors.toList())

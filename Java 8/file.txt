@@ -1,0 +1,7 @@
+AAAA
+BBBB    
+BBBB
+CCC CCCC
+DDDD EEEE
+FFFF GGGG
+//newline is also counted for length of the file File.length() 

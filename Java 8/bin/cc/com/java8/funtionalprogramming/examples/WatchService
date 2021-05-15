@@ -1,0 +1,15 @@
+changes in files and directories in given input, you will notice the captured events in console.
+
+Output:
+
+ENTRY_CREATE: c:\temp\New folder
+ENTRY_DELETE: c:\temp\New folder
+ENTRY_CREATE: c:\temp\data
+ENTRY_CREATE: c:\temp\data\New Text Document.txt
+ENTRY_MODIFY: c:\temp\data
+ENTRY_DELETE: c:\temp\data\New Text Document.txt
+ENTRY_CREATE: c:\temp\data\tempFile.txt
+ENTRY_MODIFY: c:\temp\data
+ENTRY_MODIFY: c:\temp\data\tempFile.txt
+ENTRY_MODIFY: c:\temp\data\tempFile.txt
+ENTRY_MODIFY: c:\temp\data\tempFile.txt
