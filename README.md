@@ -1,4 +1,4 @@
-# Java-8 - Short Cut ways to achive goal
+# Java-8 - Short Cut ways to code in java
 
 1)	All useful operation on Java Stream
 ------------------------------------
